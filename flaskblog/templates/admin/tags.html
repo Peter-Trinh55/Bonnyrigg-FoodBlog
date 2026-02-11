@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 class="h3">Manage Tags</h1>
+  <form class="row g-2 mt-3" method="POST">
+    <div class="col-md-6">
+      <input class="form-control" name="name" placeholder="New tag name (e.g. halal)">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-dark w-100" type="submit">Add</button>
+    </div>
+  </form>
+
+  <div class="list-group mt-3">
+    {% for t in tags %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>#{{ t.name }}</div>
+        <form method="POST" action="{{ url_for('admin.delete_tag', tag_id=t.id) }}">
+          <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

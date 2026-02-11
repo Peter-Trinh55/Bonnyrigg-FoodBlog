@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 class="h3">Login</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">{{ form.email.label(class="form-label") }}{{ form.email(class="form-control") }}</div>
+    <div class="mb-3">{{ form.password.label(class="form-label") }}{{ form.password(class="form-control") }}</div>
+    <div class="form-check mb-3">{{ form.remember(class="form-check-input") }}{{ form.remember.label(class="form-check-label") }}</div>
+    {{ form.submit(class="btn btn-dark") }}
+  </form>
+{% endblock %}
