@@ -1,2 +1,0 @@
-For long trails, include "cursormiddle" in the root folder of the skin.
-For short trails, delete "cursormiddle" in the root folder of the skin.
