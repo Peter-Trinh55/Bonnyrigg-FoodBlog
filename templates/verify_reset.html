@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Verify Reset | Bonnyrigg Pizza Blog{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="container auth-card">
+        <div class="auth-promo">
+            <span class="kicker">Verification required</span>
+            <h2>Enter your 6 digit reset code</h2>
+            <p>
+                Method: <strong>{{ 'Gmail / email code' if verification_method == 'email' else 'Authenticator app' }}</strong>
+            </p>
+            {% if verification_method == 'authenticator' %}
+            <p class="small">Manual key: <strong>{{ manual_key }}</strong></p>
+            {% endif %}
+        </div>
+        <div class="auth-form">
+            <h2 style="margin-top:0;">Verify reset</h2>
+            <form method="POST" class="form-stack">
+                <input name="code" placeholder="6 digit code" maxlength="6" required>
+                <button type="submit">Verify</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Home | Bonnyrigg Pizza Blog{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-card">
+            <div class="hero-content">
+                <span class="kicker">Bonnyrigg Pizza Recipes Only</span>
+                <h1>Professional pizza recipes with ingredients, steps and community comments.</h1>
+                <p>This version is already set up for a Bonnyrigg logo, pizza images, full recipe detail pages and a working comment section.</p>
+                <div class="hero-actions">
+                    <a class="button-link primary" href="#recipes">Browse Pizzas</a>
+                    <a class="button-link secondary" href="{{ url_for('register') }}">Join the Community</a>
+                </div>
+            </div>
+            <div class="hero-orb"></div>
+        </div>
+        <div class="hero-side">
+            <div class="side-card mini-feature"><div class="thumb">🍕</div><div><strong>Pizza-only content</strong><p class="small">All seeded recipes are focused on pizza only, not general food.</p></div></div>
+            <div class="side-card mini-feature"><div class="thumb">📝</div><div><strong>Full recipe pages</strong><p class="small">Each pizza includes ingredients, step-by-step method and a comment section.</p></div></div>
+            <div class="side-card mini-feature"><div class="thumb">🏫</div><div><strong>Bonnyrigg branding</strong><p class="small">The navbar and footer are already ready for your Bonnyrigg logo image.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="recipes">
+    <div class="container">
+        <div class="section-title">
+            <div><h2>Search and filter pizza recipes</h2><p>Search pizza names, ingredients, types and difficulty levels.</p></div>
+        </div>
+        <form class="toolbar" method="GET" action="{{ url_for('home') }}">
+            <input type="text" name="q" placeholder="Search pizza name or ingredient..." value="{{ request.args.get('q', '') }}">
+            <select name="pizza_type">
+                <option value="">All pizza types</option>
+                <option value="Classic">Classic</option>
+                <option value="Meat">Meat</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Specialty">Specialty</option>
+            </select>
+            <select name="difficulty">
+                <option value="">All difficulties</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+            </select>
+            <button type="submit">Apply Filters</button>
+        </form>
+        <div class="cards">
+            {% for recipe in recipes %}
+            <article class="recipe-card">
+                <div class="recipe-image">
+                    <img src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}">
+                </div>
+                <div class="recipe-body">
+                    <h3>{{ recipe.title }}</h3>
+                    <div class="recipe-meta">
+                        <span class="badge">Type: {{ recipe.pizza_type }}</span>
+                        <span class="badge">Difficulty: {{ recipe.difficulty }}</span>
+                        <span class="badge">{{ recipe.cook_time }} mins</span>
+                        <span class="badge">{{ recipe.comments|length }} comments</span>
+                    </div>
+                    <p>{{ recipe.description }}</p>
+                    <p class="small">Image file: {{ recipe.image_filename }}</p>
+                    <div style="margin-top:1rem;">
+                        <a class="button-link primary" href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}">View Recipe</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="comments">
+    <div class="container grid-2">
+        <div class="panel">
+            <h3>Where to add the Bonnyrigg logo</h3>
+            <p>Put your school logo image inside <strong>static/images</strong> and name it <strong>bonnyrigg_logo.png</strong>. The navbar and footer will automatically use it.</p>
+            <div class="code-note">Recommended logo filename: <strong>bonnyrigg_logo.png</strong></div>
+        </div>
+        <div class="panel">
+            <h3>Where to add pizza images</h3>
+            <p>Put your pizza images inside <strong>static/images</strong>, then type the exact filename when creating a recipe in the admin dashboard.</p>
+            <p class="small">Example filenames: margherita.jpg, pepperoni.jpg, bbq_chicken.jpg, hawaiian.jpg</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

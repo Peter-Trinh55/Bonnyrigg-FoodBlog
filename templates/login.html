@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Login | Bonnyrigg Pizza Blog{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="container auth-card">
+        <div class="auth-promo">
+            <span class="kicker">Secure Login</span>
+            <h2>Welcome back</h2>
+            <p>Enter your email and password. A 6 digit code is only required if you have enabled 2FA in your profile.</p>
+        </div>
+        <div class="auth-form">
+            <h2 style="margin-top:0;">Login</h2>
+            <form method="POST" class="form-stack">
+                <input name="email" type="email" placeholder="Email address" required>
+                <input name="password" type="password" placeholder="Password" required>
+                <select name="verification_method">
+                    <option value="authenticator">Use authenticator app if enabled</option>
+                    <option value="email">Use Gmail/email code if enabled</option>
+                </select>
+                <button type="submit">Log in</button>
+            </form>
+            <p class="small" style="margin-top:1rem;"><a href="{{ url_for('forgot_password') }}">Forgot password?</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
