@@ -1,0 +1,6 @@
+- Skinned taiko
+- Fixed menu selection buttons being offset on SD resolutions
+- Fixed menu button being offset on SD resolutions
+- Removed background from spinner RPM element
+- Made a better looking input overlay
+- Improved the healthbar slightly

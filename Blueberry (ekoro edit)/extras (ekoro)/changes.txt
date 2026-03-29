@@ -1,0 +1,5 @@
+changes from original blueberry skin:
+- cursor
+- hitsounds
+- song screen result (applause.wav)
+- default colors

@@ -1,0 +1,1 @@
+for colored variants of this cursor, do check "Extras > Cursors" from the main skin folder.
