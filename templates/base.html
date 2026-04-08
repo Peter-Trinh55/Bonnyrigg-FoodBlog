@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bonnyrigg Pizza Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/bonnyrigg_logo.png') }}" alt="Bonnyrigg Logo" class="brand-logo">
+                <span>Bonnyrigg Pizza Blog</span>
+            </a>
+            <nav class="nav-links">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                <a class="nav-link" href="{{ url_for('home') }}#recipes">Recipes</a>
+                <a class="nav-link" href="{{ url_for('home') }}#comments">Comments</a>
+                {% if current_user %}
+                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                    {% if current_user.is_admin %}
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Admin</a>
+                    {% endif %}
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-link active" href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top:1rem;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="alerts">
+              {% for category, message in messages %}
+                <div class="alert {{ 'alert-danger' if category == 'danger' else 'alert-success' }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </main>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <h3 style="margin-top:0;">Bonnyrigg Pizza Blog</h3>
+                <p class="small">Pizza-only recipe website with comments, ingredients, steps, profiles and 2FA security.</p>
+            </div>
+            <div>
+                <h4 style="margin-top:0;">Quick Links</h4>
+                <p class="small">Home<br>Recipes<br>Profile<br>Admin</p>
+            </div>
+            <div>
+                <h4 style="margin-top:0;">Branding</h4>
+                <img src="{{ url_for('static', filename='images/bonnyrigg_logo.png') }}" alt="Bonnyrigg Logo" style="width:84px; margin-top:.5rem; object-fit:contain;">
+                <p class="small" style="margin-top:.75rem;">© 2026 Bonnyrigg High School — Student Project</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

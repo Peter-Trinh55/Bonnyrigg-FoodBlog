@@ -1,4 +1,6 @@
-# Bonnyrigg Pizza Blog +
+# Bonnyrigg Pizza Blog - Login Flow Fixed
+
+This version fixes the login flow so users can sign in normally unless they have chosen to enable 2FA in their profile.
 
 ## New behavior
 - If 2FA is NOT enabled:

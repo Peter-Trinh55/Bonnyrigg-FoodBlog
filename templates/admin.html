@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | Bonnyrigg Pizza Blog{% endblock %}
+{% block content %}
+<section class="admin-wrap">
+    <div class="container">
+        <div class="section-title"><div><h2>Admin dashboard</h2><p>Add pizza recipes with image filenames, ingredients and full cooking steps.</p></div></div>
+
+        <div class="stats">
+            <div class="stat"><strong>{{ recipes|length }}</strong><span class="small">Pizza recipes</span></div>
+            <div class="stat"><strong>{{ users_count }}</strong><span class="small">Users</span></div>
+            <div class="stat"><strong>{{ comments_count }}</strong><span class="small">Comments</span></div>
+            <div class="stat"><strong>Ready</strong><span class="small">Bonnyrigg branding</span></div>
+        </div>
+
+        <div class="grid-2">
+            <div class="panel">
+                <h3 style="margin-top:0;">Add pizza recipe</h3>
+                <form method="POST" action="{{ url_for('add_recipe') }}" class="form-stack">
+                    <input name="title" placeholder="Pizza title" required>
+                    <input name="pizza_type" placeholder="Pizza type e.g. Classic" required>
+                    <input name="difficulty" placeholder="Difficulty e.g. Easy" required>
+                    <input name="cook_time" type="number" placeholder="Cook time in minutes" required>
+                    <input name="image_filename" placeholder="Image filename e.g. margherita.jpg">
+                    <textarea name="description" placeholder="Short pizza summary..." required></textarea>
+                    <textarea name="ingredients" placeholder="Put each ingredient on a new line..." required></textarea>
+                    <textarea name="steps" placeholder="Put each step on a new line..." required></textarea>
+                    <button type="submit">Add Pizza Recipe</button>
+                </form>
+            </div>
+            <div class="panel">
+                <h3 style="margin-top:0;">Image instructions</h3>
+                <ol>
+                    <li>Put the Bonnyrigg logo in <strong>static/images</strong>.</li>
+                    <li>Name the logo <strong>bonnyrigg_logo.png</strong>.</li>
+                    <li>Put pizza images in the same folder.</li>
+                    <li>Type the exact filename when adding a recipe.</li>
+                </ol>
+                <p class="small">Example image filenames: margherita.jpg, pepperoni.jpg, hawaiian.jpg, meat_lovers.jpg</p>
+            </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:1rem;">
+            <table>
+                <thead><tr><th>Title</th><th>Type</th><th>Difficulty</th><th>Time</th><th>Image</th><th>Comments</th></tr></thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                    <tr>
+                        <td>{{ recipe.title }}</td>
+                        <td>{{ recipe.pizza_type }}</td>
+                        <td>{{ recipe.difficulty }}</td>
+                        <td>{{ recipe.cook_time }} mins</td>
+                        <td>{{ recipe.image_filename }}</td>
+                        <td>{{ recipe.comments|length }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="6">No pizza recipes yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

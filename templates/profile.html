@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Profile | Bonnyrigg Pizza Blog{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="container grid-2">
+        <div class="panel">
+            <h2 style="margin-top:0;">My profile</h2>
+            <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                <img src="{{ url_for('static', filename='uploads/' + current_user.profile_image) }}" alt="Profile picture" style="width:100px; height:100px; object-fit:cover; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow);">
+                <div>
+                    <strong>{{ current_user.username }}</strong>
+                    <p class="small">{{ current_user.email }}</p>
+                    <p class="small">2FA enabled: {{ 'Yes' if current_user.two_factor_enabled else 'No' }}</p>
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" class="form-stack">
+                <input name="username" value="{{ current_user.username }}" placeholder="Username">
+                <input type="file" name="profile_image" accept=".png,.jpg,.jpeg,.gif">
+                <input type="password" name="new_password" placeholder="New password">
+                <input type="password" name="confirm_password" placeholder="Confirm new password">
+
+                <label style="display:flex; gap:.6rem; align-items:center;">
+                    <input type="checkbox" name="enable_authenticator" {% if current_user.two_factor_enabled %}checked{% endif %}>
+                    Enable authenticator app 2FA for future logins
+                </label>
+
+                <button type="submit">Save profile changes</button>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h2 style="margin-top:0;">Authenticator setup</h2>
+            <p>To use Google Authenticator or another authenticator app, add a new account manually using this secret key:</p>
+            <div class="code-note"><strong>{{ manual_key or 'This key will appear after you enable authenticator 2FA.' }}</strong></div>
+            <p class="small" style="margin-top:1rem;">
+                After adding the secret to your authenticator app, future logins can use the 6 digit code from that app.
+            </p>
+            <p class="small">
+                Gmail verification is also supported for login and password reset if you configure <code>GMAIL_ADDRESS</code> and <code>GMAIL_APP_PASSWORD</code>.
+                Without that setup, the code is printed in the terminal for testing.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
